@@ -1,0 +1,66 @@
+{
+  "visitors": [
+    {
+      "id": "bjorn",
+      "name": "Bjorn",
+      "passwordHash": "$2a$10$uaenvvtXgWnnOWXAq6J9OO3dWMzMtRekHntN1juxMMXCB0gngcAnS",
+      "mode": "custom",
+      "exclude": [],
+      "buttons": [
+        {
+          "label": "Buzz Arena",
+          "url": "https://buzz-arena.onrender.com"
+        },
+        {
+          "label": "Youtube Downloader",
+          "url": "https://youtube-downloader-jade-nine.vercel.app/"
+        },
+        {
+          "label": "Quiz",
+          "url": "https://bjorn-quiz.onrender.com"
+        },
+        {
+          "label": "game",
+          "url": "https://game.snubstad.nl"
+        },
+        {
+          "label": "Cinema",
+          "url": "https://cinema.snubstad.nl"
+        },
+        {
+          "label": "Blooket-Anticheat",
+          "url": "https://blooket-taupe.vercel.app/"
+        },
+        {
+          "label": "WeerBericht",
+          "url": "https://weer.snubstad.nl"
+        },
+        {
+          "label": "Finance Manager",
+          "url": "https://bjorn-finance.onrender.com"
+        },
+        {
+          "label": "video",
+          "url": "https://www.snubstad.nl/video"
+        }
+      ]
+    },
+    {
+      "id": "gast",
+      "name": "Gast",
+      "passwordHash": "$2a$10$Ay1z9KE1pUWpvsPHd2IC5.7R6VVXcFaQN0d9bbVRF8rQp7QJINOEO",
+      "mode": "custom",
+      "buttons": [
+        {
+          "label": "Simon Says",
+          "url": "https://simon-says-olive-ten.vercel.app/"
+        },
+        {
+          "label": "video",
+          "url": "https://www.snubstad.nl/video"
+        }
+      ],
+      "exclude": []
+    }
+  ]
+}

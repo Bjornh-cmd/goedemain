@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>video-system</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="desktop-body">
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="icon-terminal" viewBox="0 0 48 48">
+      <rect x="4" y="8" width="40" height="32" rx="4" fill="#1a1f1e"/>
+      <rect x="4" y="8" width="40" height="8" rx="4" fill="#2d3331"/>
+      <circle cx="10" cy="12" r="1.6" fill="#ff5f57"/>
+      <circle cx="15" cy="12" r="1.6" fill="#febc2e"/>
+      <circle cx="20" cy="12" r="1.6" fill="#28c840"/>
+      <path fill="#39ff88" d="M10 24l4 4-4 4v-3H8v-2h2v-3zm8 6h12v2H18v-2z"/>
+    </symbol>
+    <symbol id="icon-chrome" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="23" fill="#fff"/>
+      <path fill="#EA4335" d="M24 4.5c7.2 0 13.6 3.4 17.6 8.7L27.8 26.2a6.5 6.5 0 0 0-3.8-1.2c-3.6 0-6.5 2.9-6.5 6.5s2.9 6.5 6.5 6.5c2.9 0 5.3-1.9 6.1-4.6H24 12.4C13.8 36.8 18.4 40.5 24 40.5c8.6 0 15.5-6.9 15.5-15.5 0-1.1-.1-2.1-.3-3.1H24V4.5z"/>
+      <path fill="#FBBC05" d="M9.2 16.8C7.8 19.2 7 22 7 25c0 5.2 2.4 9.8 6.2 12.8l8.6-14.9L9.2 16.8z"/>
+      <path fill="#34A853" d="M24 4.5c3.6 0 6.9 1.3 9.5 3.4L24 24V4.5z"/>
+      <path fill="#4285F4" d="M41.6 22.5c.2 1 .3 2 .3 3 0 8.6-6.9 15.5-15.5 15.5-5.6 0-10.5-3-13.2-7.4l8.6-14.9c1.2 2.1 3.5 3.5 6.1 3.5 2.4 0 4.5-1.2 5.7-3.1l8-2.6z"/>
+      <circle cx="24" cy="25" r="7.5" fill="#fff"/>
+      <circle cx="24" cy="25" r="5.8" fill="#4285F4"/>
+    </symbol>
+  </svg>
+
+  <div id="desktop" class="desktop">
+    <div class="desktop-wallpaper" aria-hidden="true"></div>
+
+    <div class="desktop-icons">
+      <button type="button" class="desktop-icon" data-launch="terminal">
+        <svg class="desktop-icon-svg" aria-hidden="true"><use href="#icon-terminal"/></svg>
+        <span class="desktop-icon-label">Terminal</span>
+      </button>
+      <button type="button" class="desktop-icon" data-launch="browser">
+        <svg class="desktop-icon-svg" aria-hidden="true"><use href="#icon-chrome"/></svg>
+        <span class="desktop-icon-label">Chrome</span>
+      </button>
+    </div>
+
+    <div id="windows-layer" class="windows-layer">
+      <div id="terminal-window" class="os-window" data-app="terminal">
+        <div id="terminal-titlebar" class="os-titlebar">
+          <div class="os-titlebar-left">
+            <svg class="os-app-icon" aria-hidden="true"><use href="#icon-terminal"/></svg>
+            <span class="os-title">video-system — secure shell</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" title="Minimaliseren" aria-label="Minimaliseren"></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" title="Maximaliseren" aria-label="Maximaliseren"></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" title="Sluiten" aria-label="Sluiten"></button>
+          </div>
+        </div>
+        <div id="terminal-output" class="terminal-output os-window-body"></div>
+      </div>
+
+      <div id="browser-window" class="os-window os-window--browser hidden" data-app="browser">
+        <div class="os-titlebar" data-drag-handle>
+          <div class="os-titlebar-left">
+            <svg class="os-app-icon" aria-hidden="true"><use href="#icon-chrome"/></svg>
+            <span class="os-title">Google Chrome</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" title="Minimaliseren" aria-label="Minimaliseren"></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" title="Maximaliseren" aria-label="Maximaliseren"></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" title="Sluiten" aria-label="Sluiten"></button>
+          </div>
+        </div>
+        <div class="browser-toolbar browser-toolbar--chrome">
+          <button type="button" id="browser-back" class="browser-nav-btn" title="Terug" aria-label="Terug">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M15 18l-6-6 6-6v12z"/></svg>
+          </button>
+          <button type="button" id="browser-forward" class="browser-nav-btn" title="Vooruit" aria-label="Vooruit">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg>
+          </button>
+          <button type="button" id="browser-refresh" class="browser-nav-btn" title="Vernieuwen" aria-label="Vernieuwen">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.65 6.35A7.96 7.96 0 0 0 12 4V1L7 6l5 5V7c2.76 0 5 2.24 5 5 0 1.07-.34 2.07-.91 2.89l1.46 1.46A7.94 7.94 0 0 0 20 12c0-2.21-.9-4.21-2.35-5.65zM6 12c0-1.07.34-2.07.91-2.89L5.45 7.65A7.94 7.94 0 0 0 4 12c0 4.42 3.58 8 8 8v3l5-5-5-5v3c-2.76 0-5-2.24-5-5z"/></svg>
+          </button>
+          <form id="browser-form" class="browser-url-form">
+            <span class="browser-url-lock" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 1 1 6 0v3H9z"/></svg>
+            </span>
+            <input type="text" id="browser-url" class="browser-url-input" placeholder="Zoek met Google of voer een webadres in" spellcheck="false" autocomplete="off">
+          </form>
+        </div>
+        <iframe id="browser-frame" class="browser-frame" title="Google Chrome" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>
+      </div>
+    </div>
+
+    <div id="start-menu" class="start-menu hidden" role="menu">
+      <div class="start-menu-header">videoOS</div>
+      <button type="button" class="start-menu-item" data-launch="terminal">
+        <svg class="os-app-icon" aria-hidden="true"><use href="#icon-terminal"/></svg>
+        Terminal
+      </button>
+      <button type="button" class="start-menu-item" data-launch="browser">
+        <svg class="os-app-icon" aria-hidden="true"><use href="#icon-chrome"/></svg>
+        Google Chrome
+      </button>
+    </div>
+
+    <footer class="taskbar">
+      <button type="button" id="start-btn" class="taskbar-start" title="Start" aria-label="Startmenu">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg>
+      </button>
+      <div id="taskbar-apps" class="taskbar-apps"></div>
+      <div class="taskbar-tray">
+        <span id="taskbar-clock" class="taskbar-clock"></span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="video-screen" class="video-screen hidden">
+    <video id="vlog-video" controls playsinline preload="metadata"></video>
+    <button type="button" id="disconnect-btn" class="video-disconnect" title="Terug naar bureaublad" aria-label="Sluiten">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <script src="/js/video.js"></script>
+</body>
+</html>

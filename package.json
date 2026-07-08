@@ -1,0 +1,26 @@
+{
+  "name": "button-portal",
+  "version": "1.0.0",
+  "description": "Password-protected button portal with terminal editor",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "editor": "node editor.js",
+    "db:seed": "node scripts/seed-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@inquirer/prompts": "^7.0.0",
+    "nodemon": "^3.1.9"
+  }
+}

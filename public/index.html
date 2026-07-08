@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Portal — Inloggen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="page page--center">
+    <main class="container container--narrow">
+      <div class="card card--login">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>Button Portal</h1>
+            <p>Jouw persoonlijke link-hub</p>
+          </div>
+        </div>
+
+        <p class="subtitle">Log in met je wachtwoord om je knoppen te openen.</p>
+
+        <form id="login-form">
+          <label for="password">Wachtwoord</label>
+          <div class="input-wrap">
+            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required autofocus>
+            <button type="button" id="toggle-password" class="toggle-password" aria-label="Wachtwoord tonen">
+              <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <p id="error" class="error hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span id="error-text"></span>
+          </p>
+          <button type="submit" id="submit-btn" class="btn-primary">Inloggen</button>
+        </form>
+
+        <div id="guest-section" class="guest-section hidden">
+          <div class="divider"><span>of</span></div>
+          <button type="button" id="guest-btn" class="btn-guest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Gast
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>
