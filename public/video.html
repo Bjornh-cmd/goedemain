@@ -3,129 +3,368 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>video-system</title>
+  <title>Windows 12 — Video System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/win12.css">
 </head>
 <body class="desktop-body">
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="icon-win" viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h8.5v8.5H3V3zm9.5 0H21v8.5h-8.5V3zM3 12.5h8.5V21H3v-8.5zm9.5 0H21V21h-8.5v-8.5z"/></symbol>
+
     <symbol id="icon-terminal" viewBox="0 0 48 48">
-      <rect x="4" y="8" width="40" height="32" rx="4" fill="#1a1f1e"/>
-      <rect x="4" y="8" width="40" height="8" rx="4" fill="#2d3331"/>
-      <circle cx="10" cy="12" r="1.6" fill="#ff5f57"/>
-      <circle cx="15" cy="12" r="1.6" fill="#febc2e"/>
-      <circle cx="20" cy="12" r="1.6" fill="#28c840"/>
-      <path fill="#39ff88" d="M10 24l4 4-4 4v-3H8v-2h2v-3zm8 6h12v2H18v-2z"/>
+      <rect width="48" height="48" rx="10" fill="#1e1e1e"/>
+      <rect x="6" y="10" width="36" height="28" rx="4" fill="#0c0c0c" stroke="#333" stroke-width="1"/>
+      <rect x="6" y="10" width="36" height="7" rx="4" fill="#2d2d2d"/>
+      <circle cx="11" cy="13.5" r="1.5" fill="#ff5f57"/>
+      <circle cx="16" cy="13.5" r="1.5" fill="#febc2e"/>
+      <circle cx="21" cy="13.5" r="1.5" fill="#28c840"/>
+      <path fill="none" stroke="#3ddc84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 24l4 4-4 4M20 32h10"/>
     </symbol>
+
     <symbol id="icon-chrome" viewBox="0 0 48 48">
-      <circle cx="24" cy="24" r="23" fill="#fff"/>
-      <path fill="#EA4335" d="M24 4.5c7.2 0 13.6 3.4 17.6 8.7L27.8 26.2a6.5 6.5 0 0 0-3.8-1.2c-3.6 0-6.5 2.9-6.5 6.5s2.9 6.5 6.5 6.5c2.9 0 5.3-1.9 6.1-4.6H24 12.4C13.8 36.8 18.4 40.5 24 40.5c8.6 0 15.5-6.9 15.5-15.5 0-1.1-.1-2.1-.3-3.1H24V4.5z"/>
-      <path fill="#FBBC05" d="M9.2 16.8C7.8 19.2 7 22 7 25c0 5.2 2.4 9.8 6.2 12.8l8.6-14.9L9.2 16.8z"/>
-      <path fill="#34A853" d="M24 4.5c3.6 0 6.9 1.3 9.5 3.4L24 24V4.5z"/>
-      <path fill="#4285F4" d="M41.6 22.5c.2 1 .3 2 .3 3 0 8.6-6.9 15.5-15.5 15.5-5.6 0-10.5-3-13.2-7.4l8.6-14.9c1.2 2.1 3.5 3.5 6.1 3.5 2.4 0 4.5-1.2 5.7-3.1l8-2.6z"/>
+      <circle cx="24" cy="24" r="22" fill="#fff"/>
+      <path fill="#EA4335" d="M24 5c7.5 0 14.2 3.6 18.4 9.2L26.5 27.5a6.5 6.5 0 0 0-2.5-.5c-3.6 0-6.5 2.9-6.5 6.5s2.9 6.5 6.5 6.5c2.5 0 4.7-1.4 5.8-3.5H24h-11.6C13.5 37.5 18.2 42 24 42c9.9 0 18-8.1 18-18S33.9 5 24 5z"/>
+      <path fill="#FBBC05" d="M9.5 17.5C8.2 19.7 7.5 22.3 7.5 25s.7 5.3 2 7.5l9.5-15H9.5z"/>
+      <path fill="#34A853" d="M24 5c4 0 7.6 1.5 10.4 4L24 25V5z"/>
+      <path fill="#4285F4" d="M42.4 22.5c.2 1 .3 2 .3 3 0 9.9-8.1 18-18 18-5.8 0-10.9-2.7-14.2-7l9.5-15c1.3 2.2 3.7 3.7 6.4 3.7 2.5 0 4.6-1.2 5.9-3.1l7.1-2.1z"/>
       <circle cx="24" cy="25" r="7.5" fill="#fff"/>
       <circle cx="24" cy="25" r="5.8" fill="#4285F4"/>
     </symbol>
+
+    <symbol id="icon-notepad" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="10" fill="#f0f4ff"/>
+      <rect x="10" y="6" width="28" height="36" rx="3" fill="#fff" stroke="#b0c4de" stroke-width="1.5"/>
+      <rect x="10" y="6" width="28" height="8" rx="3" fill="#4a90d9"/>
+      <line x1="15" y1="20" x2="33" y2="20" stroke="#4a90d9" stroke-width="2" stroke-linecap="round"/>
+      <line x1="15" y1="27" x2="33" y2="27" stroke="#dde4ee" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="15" y1="33" x2="27" y2="33" stroke="#dde4ee" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="icon-calc" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="10" fill="#e8f4fd"/>
+      <rect x="10" y="6" width="28" height="36" rx="5" fill="#0078d4"/>
+      <rect x="14" y="11" width="20" height="9" rx="2" fill="#1a1a2e"/>
+      <text x="30" y="18.5" fill="#3ddc84" font-size="7" font-family="monospace" text-anchor="end">0</text>
+      <rect x="14" y="24" width="7" height="5" rx="1.5" fill="rgba(255,255,255,0.85)"/>
+      <rect x="24" y="24" width="7" height="5" rx="1.5" fill="rgba(255,255,255,0.85)"/>
+      <rect x="14" y="32" width="7" height="5" rx="1.5" fill="rgba(255,255,255,0.85)"/>
+      <rect x="24" y="32" width="7" height="5" rx="1.5" fill="#60cdff"/>
+    </symbol>
+
+    <symbol id="icon-settings" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="10" fill="#eceff1"/>
+      <path fill="#546e7a" d="M24 11l1.5 2.6 3 .5c.6.1 1 .7.8 1.3l-.5 2.9 2.4 2c.5.4.6 1.1.1 1.6l-2.4 2.3.6 3.2c.1.6-.4 1.2-1.1 1.2l-3.2-.5-1.5 2.6c-.4.6-1.2.7-1.7.2l-2.3-2.5-2.3 2.5c-.5.5-1.3.4-1.7-.2L15 28.3l-3.2.5c-.7.1-1.2-.6-1.1-1.2l.6-3.2-2.4-2.3c-.5-.5-.4-1.2.1-1.6l2.4-2-.5-2.9c-.1-.6.3-1.2.8-1.3l3-.5L24 11zm0 7.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/>
+      <circle cx="24" cy="24" r="4" fill="#cfd8dc"/>
+    </symbol>
+
+    <symbol id="icon-explorer" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="10" fill="#fff8e1"/>
+      <path fill="#ffc107" d="M6 16h36l-3.5 22H9.5L6 16z"/>
+      <path fill="#ff9800" d="M4 11h18l2.5 5H4v-5z"/>
+      <rect x="14" y="24" width="20" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+    </symbol>
+
+    <symbol id="icon-about" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="10" fill="#e3f2fd"/>
+      <circle cx="24" cy="24" r="18" fill="#0078d4"/>
+      <path fill="#fff" d="M14 14h7v7h-7zm13 0h7v7h-7zM14 27h7v7h-7zm13 0h7v7h-7z" transform="scale(0.7) translate(7,7)"/>
+    </symbol>
+
+    <symbol id="icon-folder" viewBox="0 0 24 24">
+      <path fill="#FFC107" d="M4 6h7.5l1.5 2H20a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/>
+      <path fill="#FFD54F" d="M4 6h7.5l1.5 2H20v1H4V6z"/>
+    </symbol>
+
+    <symbol id="icon-file" viewBox="0 0 24 24">
+      <path fill="#ECEFF1" stroke="#B0BEC5" stroke-width="0.5" d="M6 2h7.5L18 6.5V22a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+      <path fill="#B0BEC5" d="M13 2v5h5L13 2z"/>
+      <line x1="8" y1="12" x2="16" y2="12" stroke="#90A4AE" stroke-width="1"/>
+      <line x1="8" y1="15" x2="14" y2="15" stroke="#90A4AE" stroke-width="1"/>
+    </symbol>
+
+    <symbol id="icon-video" viewBox="0 0 24 24">
+      <rect x="2" y="5" width="20" height="14" rx="2" fill="#5C6BC0"/>
+      <path fill="#fff" d="M10 9.5v5l5-2.5-5-2.5z"/>
+    </symbol>
   </svg>
 
-  <div id="desktop" class="desktop">
+  <div id="boot-screen" class="boot-screen">
+    <svg class="boot-logo" viewBox="0 0 24 24"><use href="#icon-win"/></svg>
+    <div class="boot-spinner"></div>
+  </div>
+
+  <div id="login-screen" class="login-screen hidden">
+    <div class="login-backdrop"></div>
+    <div class="login-card">
+      <svg class="login-logo" viewBox="0 0 24 24"><use href="#icon-win"/></svg>
+      <h1 class="login-title">Welkom</h1>
+      <p class="login-subtitle">Voer je gebruikersnaam in om door te gaan</p>
+      <form id="login-form" class="login-form">
+        <input type="text" id="login-username" class="login-input" placeholder="Gebruikersnaam" autocomplete="username" required maxlength="32">
+        <button type="submit" class="login-btn">Inloggen</button>
+      </form>
+      <p class="login-hint">Elke gebruikersnaam werkt — je naam wordt op het bureaublad getoond.</p>
+    </div>
+  </div>
+
+  <div id="desktop" class="desktop hidden">
     <div class="desktop-wallpaper" aria-hidden="true"></div>
 
     <div class="desktop-icons">
       <button type="button" class="desktop-icon" data-launch="terminal">
-        <svg class="desktop-icon-svg" aria-hidden="true"><use href="#icon-terminal"/></svg>
+        <svg class="desktop-icon-svg"><use href="#icon-terminal"/></svg>
         <span class="desktop-icon-label">Terminal</span>
       </button>
       <button type="button" class="desktop-icon" data-launch="browser">
-        <svg class="desktop-icon-svg" aria-hidden="true"><use href="#icon-chrome"/></svg>
-        <span class="desktop-icon-label">Chrome</span>
+        <svg class="desktop-icon-svg"><use href="#icon-chrome"/></svg>
+        <span class="desktop-icon-label">Google Chrome</span>
+      </button>
+      <button type="button" class="desktop-icon" data-launch="notepad">
+        <svg class="desktop-icon-svg"><use href="#icon-notepad"/></svg>
+        <span class="desktop-icon-label">Kladblok</span>
+      </button>
+      <button type="button" class="desktop-icon" data-launch="calc">
+        <svg class="desktop-icon-svg"><use href="#icon-calc"/></svg>
+        <span class="desktop-icon-label">Rekenmachine</span>
+      </button>
+      <button type="button" class="desktop-icon" data-launch="explorer">
+        <svg class="desktop-icon-svg"><use href="#icon-explorer"/></svg>
+        <span class="desktop-icon-label">Verkenner</span>
+      </button>
+      <button type="button" class="desktop-icon" data-launch="settings">
+        <svg class="desktop-icon-svg"><use href="#icon-settings"/></svg>
+        <span class="desktop-icon-label">Instellingen</span>
       </button>
     </div>
 
     <div id="windows-layer" class="windows-layer">
-      <div id="terminal-window" class="os-window" data-app="terminal">
-        <div id="terminal-titlebar" class="os-titlebar">
-          <div class="os-titlebar-left">
-            <svg class="os-app-icon" aria-hidden="true"><use href="#icon-terminal"/></svg>
-            <span class="os-title">video-system — secure shell</span>
+      <!-- Terminal -->
+      <div id="terminal-window" class="os-window hidden" data-app="terminal">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-terminal"/></svg>
+            <span class="os-title">Terminal</span>
           </div>
           <div class="os-titlebar-controls">
-            <button type="button" class="os-btn os-btn--min" data-action="minimize" title="Minimaliseren" aria-label="Minimaliseren"></button>
-            <button type="button" class="os-btn os-btn--max" data-action="maximize" title="Maximaliseren" aria-label="Maximaliseren"></button>
-            <button type="button" class="os-btn os-btn--close" data-action="close" title="Sluiten" aria-label="Sluiten"></button>
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
           </div>
         </div>
         <div id="terminal-output" class="terminal-output os-window-body"></div>
       </div>
 
-      <div id="browser-window" class="os-window os-window--browser hidden" data-app="browser">
-        <div class="os-titlebar" data-drag-handle>
-          <div class="os-titlebar-left">
-            <svg class="os-app-icon" aria-hidden="true"><use href="#icon-chrome"/></svg>
+      <!-- Chrome Browser -->
+      <div id="browser-window" class="os-window os-window--browser os-window--light hidden" data-app="browser">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-chrome"/></svg>
             <span class="os-title">Google Chrome</span>
           </div>
           <div class="os-titlebar-controls">
-            <button type="button" class="os-btn os-btn--min" data-action="minimize" title="Minimaliseren" aria-label="Minimaliseren"></button>
-            <button type="button" class="os-btn os-btn--max" data-action="maximize" title="Maximaliseren" aria-label="Maximaliseren"></button>
-            <button type="button" class="os-btn os-btn--close" data-action="close" title="Sluiten" aria-label="Sluiten"></button>
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
           </div>
         </div>
         <div class="browser-toolbar browser-toolbar--chrome">
-          <button type="button" id="browser-back" class="browser-nav-btn" title="Terug" aria-label="Terug">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M15 18l-6-6 6-6v12z"/></svg>
-          </button>
-          <button type="button" id="browser-forward" class="browser-nav-btn" title="Vooruit" aria-label="Vooruit">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M9 6l6 6-6 6V6z"/></svg>
-          </button>
-          <button type="button" id="browser-refresh" class="browser-nav-btn" title="Vernieuwen" aria-label="Vernieuwen">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.65 6.35A7.96 7.96 0 0 0 12 4V1L7 6l5 5V7c2.76 0 5 2.24 5 5 0 1.07-.34 2.07-.91 2.89l1.46 1.46A7.94 7.94 0 0 0 20 12c0-2.21-.9-4.21-2.35-5.65zM6 12c0-1.07.34-2.07.91-2.89L5.45 7.65A7.94 7.94 0 0 0 4 12c0 4.42 3.58 8 8 8v3l5-5-5-5v3c-2.76 0-5-2.24-5-5z"/></svg>
-          </button>
           <form id="browser-form" class="browser-url-form">
             <span class="browser-url-lock" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 1 1 6 0v3H9z"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="#4285F4"/><text x="12" y="16" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">G</text></svg>
             </span>
-            <input type="text" id="browser-url" class="browser-url-input" placeholder="Zoek met Google of voer een webadres in" spellcheck="false" autocomplete="off">
+            <input type="text" id="browser-url" class="browser-url-input" placeholder="Zoeken op Google" spellcheck="false" autocomplete="off">
           </form>
+          <button type="button" id="browser-refresh" class="browser-nav-btn" title="Vernieuwen" aria-label="Vernieuwen">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M17.65 6.35A7.96 7.96 0 0 0 12 4V1L7 6l5 5V7c2.76 0 5 2.24 5 5 0 1.07-.34 2.07-.91 2.89l1.46 1.46A7.94 7.94 0 0 0 20 12c0-2.21-.9-4.21-2.35-5.65zM6 12c0-1.07.34-2.07.91-2.89L5.45 7.65A7.94 7.94 0 0 0 4 12c0 4.42 3.58 8 8 8v3l5-5-5-5v3c-2.76 0-5-2.24-5-5z"/></svg>
+          </button>
         </div>
-        <iframe id="browser-frame" class="browser-frame" title="Google Chrome" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>
+        <iframe id="browser-frame" class="browser-frame" title="Google Chrome" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+      </div>
+
+      <!-- Notepad -->
+      <div id="notepad-window" class="os-window os-window--light hidden" data-app="notepad" style="width:min(560px,calc(100vw - 2rem));height:min(420px,calc(100vh - 6rem))">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-notepad"/></svg>
+            <span class="os-title">Kladblok</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
+          </div>
+        </div>
+        <textarea id="notepad-area" class="app-notepad os-window-body" placeholder="Typ hier..."></textarea>
+      </div>
+
+      <!-- Calculator -->
+      <div id="calc-window" class="os-window os-window--light hidden" data-app="calc" style="width:300px;height:auto">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-calc"/></svg>
+            <span class="os-title">Rekenmachine</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
+          </div>
+        </div>
+        <div id="calc-body" class="app-calc os-window-body"></div>
+      </div>
+
+      <!-- Settings -->
+      <div id="settings-window" class="os-window os-window--light hidden" data-app="settings" style="width:min(440px,calc(100vw - 2rem));height:min(360px,calc(100vh - 6rem))">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-settings"/></svg>
+            <span class="os-title">Instellingen</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
+          </div>
+        </div>
+        <div class="app-settings os-window-body">
+          <h3>Systeem</h3>
+          <div class="setting-row">
+            <label for="setting-dark">Donkere modus (terminal)</label>
+            <input type="checkbox" id="setting-dark" checked>
+          </div>
+          <div class="setting-row">
+            <label for="setting-sound">Geluidseffecten</label>
+            <input type="checkbox" id="setting-sound">
+          </div>
+          <div class="setting-row">
+            <label for="setting-anim">Animaties</label>
+            <input type="checkbox" id="setting-anim" checked>
+          </div>
+          <div class="setting-row">
+            <span>Windows-versie</span>
+            <span style="color:#666">12.0 (Web)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explorer -->
+      <div id="explorer-window" class="os-window os-window--light hidden" data-app="explorer" style="width:min(640px,calc(100vw - 2rem));height:min(440px,calc(100vh - 6rem))">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-explorer"/></svg>
+            <span class="os-title">Verkenner</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
+          </div>
+        </div>
+        <div id="explorer-body" class="app-explorer os-window-body"></div>
+      </div>
+
+      <!-- About -->
+      <div id="about-window" class="os-window os-window--light hidden" data-app="about" style="width:380px;height:auto">
+        <div class="os-titlebar">
+          <div class="os-titlebar-left" data-drag-handle>
+            <svg class="os-app-icon"><use href="#icon-about"/></svg>
+            <span class="os-title">Over Windows</span>
+          </div>
+          <div class="os-titlebar-controls">
+            <button type="button" class="os-btn os-btn--min" data-action="minimize" aria-label="Minimaliseren"><span class="os-btn-glyph" aria-hidden="true">─</span></button>
+            <button type="button" class="os-btn os-btn--max" data-action="maximize" aria-label="Maximaliseren"><span class="os-btn-glyph" aria-hidden="true">□</span></button>
+            <button type="button" class="os-btn os-btn--close" data-action="close" aria-label="Sluiten"><span class="os-btn-glyph" aria-hidden="true">✕</span></button>
+          </div>
+        </div>
+        <div class="app-about os-window-body">
+          <svg class="app-about-logo" viewBox="0 0 24 24"><use href="#icon-win"/></svg>
+          <h2>Windows 12</h2>
+          <p class="app-about-version">Versie 12.0.26000 (Web Edition)</p>
+          <p>Button Portal Video System — een webgebaseerd bureaublad met beveiligde video-toegang via de terminal.</p>
+        </div>
       </div>
     </div>
 
+    <!-- Start menu -->
     <div id="start-menu" class="start-menu hidden" role="menu">
-      <div class="start-menu-header">videoOS</div>
-      <button type="button" class="start-menu-item" data-launch="terminal">
-        <svg class="os-app-icon" aria-hidden="true"><use href="#icon-terminal"/></svg>
-        Terminal
-      </button>
-      <button type="button" class="start-menu-item" data-launch="browser">
-        <svg class="os-app-icon" aria-hidden="true"><use href="#icon-chrome"/></svg>
-        Google Chrome
-      </button>
+      <input type="text" id="start-search" class="start-search" placeholder="Typ hier om te zoeken" autocomplete="off">
+      <div class="start-section-title">Vastgemaakt</div>
+      <div class="start-pins">
+        <button type="button" class="start-pin" data-launch="terminal" data-search="terminal cmd"><svg class="os-app-icon"><use href="#icon-terminal"/></svg>Terminal</button>
+        <button type="button" class="start-pin" data-launch="browser" data-search="chrome browser internet google"><svg class="os-app-icon"><use href="#icon-chrome"/></svg>Google Chrome</button>
+        <button type="button" class="start-pin" data-launch="notepad" data-search="kladblok notepad"><svg class="os-app-icon"><use href="#icon-notepad"/></svg>Kladblok</button>
+        <button type="button" class="start-pin" data-launch="calc" data-search="rekenmachine calculator"><svg class="os-app-icon"><use href="#icon-calc"/></svg>Rekenmachine</button>
+        <button type="button" class="start-pin" data-launch="explorer" data-search="verkenner explorer bestanden"><svg class="os-app-icon"><use href="#icon-explorer"/></svg>Verkenner</button>
+        <button type="button" class="start-pin" data-launch="settings" data-search="instellingen settings"><svg class="os-app-icon"><use href="#icon-settings"/></svg>Instellingen</button>
+        <button type="button" class="start-pin" data-launch="about" data-search="over windows about"><svg class="os-app-icon"><use href="#icon-about"/></svg>Over Windows</button>
+      </div>
+      <div class="start-footer">
+        <div class="start-user">
+          <div id="start-avatar" class="start-avatar">?</div>
+          <span id="start-username">Gebruiker</span>
+        </div>
+        <button type="button" id="power-btn" class="start-power" title="Afsluiten" aria-label="Afsluiten">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M13 3h-2v10h2V3zm4.36 2.64l-1.41 1.41A7 7 0 1 1 7.05 7.05L5.64 5.64a9 9 0 1 0 11.72 0z"/></svg>
+        </button>
+      </div>
     </div>
 
-    <footer class="taskbar">
-      <button type="button" id="start-btn" class="taskbar-start" title="Start" aria-label="Startmenu">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg>
-      </button>
-      <div id="taskbar-apps" class="taskbar-apps"></div>
-      <div class="taskbar-tray">
-        <span id="taskbar-clock" class="taskbar-clock"></span>
-      </div>
-    </footer>
+    <!-- Taskbar -->
+    <div class="taskbar-wrap">
+      <footer class="taskbar">
+        <button type="button" id="start-btn" class="taskbar-start" title="Start" aria-label="Startmenu">
+          <svg viewBox="0 0 24 24" width="22" height="22"><use href="#icon-win"/></svg>
+        </button>
+        <div class="taskbar-divider" aria-hidden="true"></div>
+        <div id="taskbar-apps" class="taskbar-apps"></div>
+        <div class="taskbar-divider taskbar-divider--tray" aria-hidden="true"></div>
+        <div class="taskbar-tray">
+          <div class="taskbar-user" id="taskbar-user" title="Ingelogde gebruiker">
+            <span id="taskbar-user-avatar" class="taskbar-user-avatar">?</span>
+            <span id="taskbar-user-name" class="taskbar-user-name">Gebruiker</span>
+          </div>
+          <div class="taskbar-tray-icons">
+            <svg class="tray-icon" viewBox="0 0 24 24" title="Netwerk"><path fill="currentColor" d="M1 9l2 2c2.5-4 7-6 11-4.5C18.5 8 21 11 21 15h2C23 9 18 3 12 3S1 9 1 9zm4 4l2 2c1.5-2 4.5-3 7-1.5 1.5 1 2.5 2.5 2.5 4.5h2c0-4-3-7.5-7-7.5S5 13 5 13zm4 4l2 2c.5-1 2-1.5 3.5-.5 1 .5 1.5 1.5 1.5 2.5h2c0-2.5-2-4.5-4.5-4.5S9 21 9 21z"/></svg>
+            <svg class="tray-icon" viewBox="0 0 24 24" title="Volume"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+          </div>
+          <div id="taskbar-clock" class="taskbar-clock">
+            <span id="clock-time" class="taskbar-clock-time">00:00</span>
+            <span id="clock-date" class="taskbar-clock-date">1 jan</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="video-unlock-modal" class="video-unlock-modal hidden" role="dialog" aria-modal="true" aria-labelledby="video-unlock-title">
+      <div class="video-unlock-backdrop" id="video-unlock-backdrop"></div>
+      <form id="video-unlock-form" class="video-unlock-card" autocomplete="off" data-lpignore="true">
+        <svg class="video-unlock-icon" viewBox="0 0 24 24"><use href="#icon-video"/></svg>
+        <h2 id="video-unlock-title" class="video-unlock-title">Video openen</h2>
+        <p id="video-unlock-subtitle" class="video-unlock-subtitle"></p>
+        <input type="text" id="video-unlock-password" class="video-unlock-input video-unlock-input--secret" placeholder="Toegangscode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" inputmode="text" required>
+        <p id="video-unlock-error" class="video-unlock-error hidden" role="alert"></p>
+        <div class="video-unlock-actions">
+          <button type="button" id="video-unlock-cancel" class="video-unlock-btn video-unlock-btn--secondary">Annuleren</button>
+          <button type="submit" class="video-unlock-btn video-unlock-btn--primary">Openen</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div id="video-screen" class="video-screen hidden">
     <video id="vlog-video" controls playsinline preload="metadata"></video>
+    <iframe id="vlog-embed" class="vlog-embed hidden" title="Vlog" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     <button type="button" id="disconnect-btn" class="video-disconnect" title="Terug naar bureaublad" aria-label="Sluiten">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
     </button>
   </div>
 
+  <script src="/js/dev-reload.js"></script>
   <script src="/js/video.js"></script>
 </body>
 </html>

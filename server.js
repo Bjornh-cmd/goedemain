@@ -111,6 +111,9 @@ async function startServer() {
   console.log(`Button Portal draait op http://localhost:${PORT}`);
   console.log('Lokale modus — data/config.json');
   console.log('Bezoekers en knoppen aanpassen: npm run editor');
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Dev-modus: pagina herlaadt automatisch bij wijzigingen (npm run dev)');
+  }
 }
 
 async function start() {

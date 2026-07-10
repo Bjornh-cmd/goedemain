@@ -18,6 +18,7 @@ const {
   verifyVlogToken,
   getVlogCookieName,
   getVlogCookieOptions,
+  getVlogPlayback,
   streamVideo,
 } = require('./lib/vlog');
 const {
@@ -34,11 +35,19 @@ const { isLocalMode, isVercel } = require('./lib/local-mode');
 const { parseTargetUrl, fetchProxied } = require('./lib/browse-proxy');
 
 const app = express();
+const isDev = process.env.NODE_ENV !== 'production';
+const SERVER_BUILD = String(Date.now());
 
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
+
+if (isDev) {
+  app.get('/api/dev-version', (_req, res) => {
+    res.json({ build: SERVER_BUILD });
+  });
+}
 
 app.get('/api/health', (_req, res) => {
   const health = {
@@ -186,6 +195,14 @@ app.post('/api/vlogs/:id/unlock', (req, res) => {
   const token = signVlogToken(vlog.id);
   res.cookie(getVlogCookieName(vlog.id), token, getVlogCookieOptions());
   res.json({ ok: true });
+});
+
+app.get('/api/vlogs/:id/playback', (req, res) => {
+  const vlog = getVlog(req.params.id);
+  if (!vlog) return res.status(404).json({ error: 'Vlog niet gevonden' });
+  const token = req.cookies[getVlogCookieName(vlog.id)];
+  if (!verifyVlogToken(token, vlog.id)) return res.status(403).json({ error: 'Code vereist' });
+  res.json(getVlogPlayback(vlog));
 });
 
 app.get('/api/vlogs/:id/video', (req, res) => {
