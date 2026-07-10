@@ -610,6 +610,12 @@ function closeVideoUnlockModal() {
 async function openVideoUnlockModal(id, title) {
   const statusRes = await fetch(`/api/vlogs/${encodeURIComponent(id)}/status`);
   if (!statusRes.ok) return;
+  const status = await statusRes.json();
+
+  if (status.noPassword) {
+    await unlockAndPlayVideo(id, '');
+    return;
+  }
 
   pendingExplorerVlogId = id;
   videoUnlockTitle.textContent = 'Video openen';
@@ -651,6 +657,15 @@ async function handleUsernameInput(name) {
   commitActiveLine(trimmed);
   const statusRes = await fetch(`/api/vlogs/${encodeURIComponent(vlogId)}/status`);
   if (!statusRes.ok) { appendLine(`Fout: vlog "${vlogId}" niet gevonden.`, 'terminal-line--error'); state = STATES.COMMAND; showPrompt(getShellPrompt()); return; }
+  const status = await statusRes.json();
+  if (status.noPassword) {
+    appendLine('Geen wachtwoord vereist. Video wordt geladen...', 'terminal-line--success');
+    state = STATES.COMMAND;
+    const { ok, error } = await unlockAndPlayVideo(vlogId, '');
+    if (!ok) appendLine(error, 'terminal-line--error');
+    showPrompt(getShellPrompt());
+    return;
+  }
   state = STATES.PASSWORD;
   showPrompt(PROMPT_PASS, 'password');
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bjornjacht</title>
+  <style>
+    * { margin: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" controls playsinline autoplay preload="auto" src="/bjornjacht/video"></video>
+  <script>
+    const video = document.getElementById('video');
+
+    function enterFullscreen() {
+      const el = document.documentElement;
+      const req = el.requestFullscreen?.() || el.webkitRequestFullscreen?.();
+      if (req?.then) req.catch(() => {});
+    }
+
+    video.addEventListener('loadeddata', enterFullscreen);
+    video.play().catch(() => {});
+    enterFullscreen();
+  </script>
+</body>
+</html>

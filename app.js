@@ -141,6 +141,25 @@ app.get('/vid', (_req, res) => {
   res.sendFile(videoPage);
 });
 
+const bjornjachtPage = path.join(__dirname, 'public', 'bjornjacht.html');
+
+app.get('/bjornjacht', (_req, res) => {
+  res.sendFile(bjornjachtPage);
+});
+
+app.get('/bjornjacht/video', (req, res) => {
+  const vlog = getVlog('bjornjacht');
+  if (!vlog) {
+    return res.status(404).send('Video niet gevonden');
+  }
+  try {
+    streamVideo(vlog, req, res);
+  } catch (err) {
+    console.error('Bjornjacht stream error:', err);
+    res.status(500).send('Video afspelen mislukt');
+  }
+});
+
 app.get('/videos', (_req, res) => {
   res.sendFile(videoPage);
 });
@@ -178,7 +197,10 @@ app.get('/api/vlogs/:id/status', (req, res) => {
   }
 
   const token = req.cookies[getVlogCookieName(vlog.id)];
-  res.json({ unlocked: verifyVlogToken(token, vlog.id) });
+  res.json({
+    unlocked: verifyVlogToken(token, vlog.id),
+    noPassword: Boolean(vlog.noPassword),
+  });
 });
 
 app.post('/api/vlogs/:id/unlock', (req, res) => {
@@ -187,9 +209,11 @@ app.post('/api/vlogs/:id/unlock', (req, res) => {
     return res.status(404).json({ error: 'Vlog niet gevonden' });
   }
 
-  const { code } = req.body;
-  if (!verifyCode(vlog, code)) {
-    return res.status(401).json({ error: 'Onjuiste code' });
+  if (!vlog.noPassword) {
+    const { code } = req.body;
+    if (!verifyCode(vlog, code)) {
+      return res.status(401).json({ error: 'Onjuiste code' });
+    }
   }
 
   const token = signVlogToken(vlog.id);
