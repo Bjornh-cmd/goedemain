@@ -42,6 +42,10 @@
         {
           "label": "video",
           "url": "https://www.snubstad.nl/video"
+        },
+        {
+          "label": "online-python",
+          "url": "https://python.snubstad.nl/"
         }
       ]
     },
