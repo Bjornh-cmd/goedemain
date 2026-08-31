@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinoviApps</title>
+  <meta name="description" content="FinoviApps — mobile apps and privacy policies.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --border: #334155;
+        --accent: #60a5fa;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      padding: 2rem 1rem 3rem;
+    }
+
+    main {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p { color: var(--muted); margin-bottom: 1.5rem; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      border-top: 1px solid var(--border);
+    }
+
+    a {
+      display: block;
+      padding: 1rem 0;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .app-desc {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>FinoviApps</h1>
+    <p>Privacy policies for our mobile apps.</p>
+
+    <ul>
+      <li>
+        <a href="/finoviapps/offlinegames">
+          Offline Games No Wifi
+          <span class="app-desc">Privacy Policy</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+</body>
+</html>

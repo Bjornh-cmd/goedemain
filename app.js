@@ -142,6 +142,18 @@ app.get('/vid', (_req, res) => {
 });
 
 const bjornjachtPage = path.join(__dirname, 'public', 'bjornjacht.html');
+const finoviappsDir = path.join(__dirname, 'public', 'finoviapps');
+
+app.get('/finoviapps', (_req, res) => {
+  res.sendFile(path.join(finoviappsDir, 'index.html'));
+});
+
+app.get('/finoviapps/:app', (req, res) => {
+  const file = path.join(finoviappsDir, `${req.params.app}.html`);
+  res.sendFile(file, (err) => {
+    if (err) res.status(404).send('Pagina niet gevonden');
+  });
+});
 
 app.get('/bjornjacht', (_req, res) => {
   res.sendFile(bjornjachtPage);
