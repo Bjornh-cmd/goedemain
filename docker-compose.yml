@@ -1,26 +1,21 @@
+# Coolify / productie: geen host-poort (proxy gebruikt expose). Lokaal: zie docker-compose.local.yml
 services:
   button-portal:
     build: .
-    container_name: button-portal
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     environment:
       SESSION_SECRET: ${SESSION_SECRET:-verander-dit-geheim-in-productie}
       PORT: 3000
       HOST: 0.0.0.0
       NODE_ENV: production
       ADMIN_VISITOR_ID: bjorn
-      COOKIE_SECURE: "false"
       NODE_OPTIONS: --max-old-space-size=350
       VERCEL_TOKEN: ${VERCEL_TOKEN:-}
       VERCEL_TEAM_ID: ${VERCEL_TEAM_ID:-}
     mem_limit: 400m
     memswap_limit: 400m
     volumes:
-      # Lokale database blijft behouden tussen restarts
       - ./data:/app/data
-      # Video's / vlogs
       - ./vid:/app/vid
-      # Bjornjacht fullscreen video (root)
-      - ./Bjorn-Jacht.mp4:/app/Bjorn-Jacht.mp4:ro
     restart: unless-stopped

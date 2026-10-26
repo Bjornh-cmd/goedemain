@@ -22,22 +22,24 @@ Swiss International thema (zie `DESIGN.md`): Space Grotesk + Inter, rood accent 
 # Optioneel: .env met SESSION_SECRET
 cp .env.example .env
 
-docker compose up --build -d
+docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d
 ```
 
 Open `http://localhost:3000`
 
 | Commando | Beschrijving |
 |----------|-------------|
-| `docker compose up --build -d` | Bouwen en starten |
+| `docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d` | Lokaal bouwen en starten (poort 3000) |
 | `docker compose logs -f` | Logs bekijken |
 | `docker compose down` | Stoppen |
+
+De standaard `docker-compose.yml` bindt **geen** host-poort (geschikt voor Coolify). Zonder `docker-compose.local.yml` conflicteert poort 3000 niet met andere services op de server.
 
 Data blijft in `./data` (accounts/knoppen). Video's in `./vid`.
 
 ## Deploy op Coolify
 
-1. **Nieuwe resource** → Git-repo → **Build pack: Dockerfile**
+1. **Nieuwe resource** → Git-repo → **Docker Compose** (`docker-compose.yml`) of Dockerfile
 2. **Ports Exposes:** `3000` (moet overeenkomen met `PORT` in de container)
 3. **Environment variables** (minimaal):
    ```env

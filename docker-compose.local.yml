@@ -1,0 +1,10 @@
+# Lokaal: docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d
+services:
+  button-portal:
+    container_name: button-portal
+    ports:
+      - "3000:3000"
+    environment:
+      COOKIE_SECURE: "false"
+    volumes:
+      - ./Bjorn-Jacht.mp4:/app/Bjorn-Jacht.mp4:ro
