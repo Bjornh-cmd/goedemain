@@ -56,6 +56,8 @@ Data blijft in `./data` (accounts/knoppen). Video's in `./vid`.
 
 Bij een lege `/app/data`-volume wordt bij eerste start `config.seed.json` uit de image naar `data/config.json` gekopieerd.
 
+**Video’s** (`Bjorn-Jacht.mp4`, `vid/vlog/vlog.mp4`) staan niet in Git (te groot). Upload ze via Coolify **Persistent storage** of mount ze op de server.
+
 ## Snel starten (zonder Docker)
 
 ```bash

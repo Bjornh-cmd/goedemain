@@ -1,2 +1,0 @@
-vid/vlog/vlog.mp4 filter=lfs diff=lfs merge=lfs -text
-Bjorn-Jacht.mp4 filter=lfs diff=lfs merge=lfs -text
