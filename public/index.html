@@ -6,8 +6,8 @@
   <title>Button Portal — Inloggen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=acme4">
 </head>
 <body>
   <div class="page page--center">
@@ -28,26 +28,37 @@
           </div>
         </div>
 
-        <p class="subtitle">Log in met je wachtwoord om je knoppen te openen.</p>
+        <p id="login-subtitle" class="subtitle">Voer je gebruikersnaam in om door te gaan.</p>
 
         <form id="login-form">
-          <label for="password">Wachtwoord</label>
-          <div class="input-wrap">
-            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required autofocus>
-            <button type="button" id="toggle-password" class="toggle-password" aria-label="Wachtwoord tonen">
-              <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-            </button>
+          <div id="username-step">
+            <label for="username">Gebruikersnaam</label>
+            <div class="input-wrap">
+              <input type="text" id="username" name="username" class="login-input" autocomplete="username" placeholder="Gebruikersnaam" required autofocus>
+            </div>
           </div>
+
+          <div id="password-step" class="hidden">
+            <label for="password">Wachtwoord</label>
+            <div class="input-wrap">
+              <input type="password" id="password" name="password" class="login-input" autocomplete="current-password" placeholder="Wachtwoord">
+              <button type="button" id="toggle-password" class="toggle-password" aria-label="Wachtwoord tonen">
+                <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <button type="button" id="back-username" class="btn-secondary login-back">← Andere gebruikersnaam</button>
+          </div>
+
           <p id="error" class="error hidden">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
             <span id="error-text"></span>
           </p>
-          <button type="submit" id="submit-btn" class="btn-primary">Inloggen</button>
+          <button type="submit" id="submit-btn" class="btn-primary">Volgende</button>
         </form>
 
         <div id="guest-section" class="guest-section hidden">

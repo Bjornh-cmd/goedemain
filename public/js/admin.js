@@ -32,6 +32,16 @@ const buttonCancelBtn = document.getElementById('button-cancel');
 let visitors = [];
 let selectedVisitorId = null;
 let editingButtonIndex = null;
+let siteRoutes = [];
+let vercelProjects = [];
+let vercelConfigured = false;
+const siteRoutesEl = document.getElementById('site-routes');
+const vercelStatusEl = document.getElementById('vercel-status');
+const vercelProjectsEl = document.getElementById('vercel-projects');
+const vercelActionsEl = document.getElementById('vercel-actions');
+const vercelRefreshBtn = document.getElementById('vercel-refresh-btn');
+const vercelAddSelectedBtn = document.getElementById('vercel-add-selected');
+const vercelAddAllBtn = document.getElementById('vercel-add-all');
 
 async function api(path, options = {}) {
   const res = await fetch(path, {
@@ -83,6 +93,63 @@ function renderVisitors() {
     .join('');
 }
 
+function renderSiteRoutes() {
+  if (!siteRoutesEl) return;
+  if (!siteRoutes.length) {
+    siteRoutesEl.innerHTML = '';
+    return;
+  }
+
+  siteRoutesEl.innerHTML = siteRoutes
+    .map((route) => {
+      const path = route.path || route.url;
+      return `
+      <a class="site-route-chip" href="${escapeHtml(path)}" target="_blank" rel="noopener noreferrer"
+        title="${escapeHtml(route.description || path)} — opent in nieuw tabblad">
+        <strong>${escapeHtml(route.label)}</strong>
+        <span>${escapeHtml(path)}</span>
+      </a>`;
+    })
+    .join('');
+}
+
+function renderVercelProjects(visitor) {
+  if (!vercelProjectsEl || !vercelStatusEl) return;
+
+  if (!vercelConfigured) {
+    vercelStatusEl.textContent =
+      'Vercel niet gekoppeld. Zet VERCEL_TOKEN in .env (optioneel: VERCEL_TEAM_ID) en herstart de server.';
+    vercelProjectsEl.innerHTML = '';
+    vercelActionsEl?.classList.add('hidden');
+    return;
+  }
+
+  if (!vercelProjects.length) {
+    vercelStatusEl.textContent = 'Geen Vercel-projecten gevonden (of nog niet geladen). Klik Vernieuwen.';
+    vercelProjectsEl.innerHTML = '';
+    vercelActionsEl?.classList.add('hidden');
+    return;
+  }
+
+  const existing = new Set((visitor?.buttons || []).map((b) => b.url.trim().toLowerCase()));
+  vercelStatusEl.textContent = `${vercelProjects.length} project(en) van Vercel. Selecteer en voeg toe als knop.`;
+  vercelActionsEl?.classList.remove('hidden');
+
+  vercelProjectsEl.innerHTML = vercelProjects
+    .map((project) => {
+      const added = existing.has(String(project.url).toLowerCase());
+      return `
+      <label class="site-route-chip vercel-chip${added ? ' vercel-chip--added' : ''}" title="${escapeHtml(project.url)}">
+        <span>
+          <input type="checkbox" data-vercel-url="${escapeHtml(project.url)}" data-vercel-label="${escapeHtml(project.name)}" ${added ? 'disabled' : ''}>
+          <strong>${escapeHtml(project.name)}</strong>
+        </span>
+        <span>${escapeHtml(project.url)}</span>
+      </label>`;
+    })
+    .join('');
+}
+
 function renderButtons(visitor) {
   if (!visitor) {
     visitorDetailEl.classList.add('hidden');
@@ -92,9 +159,11 @@ function renderButtons(visitor) {
   visitorDetailEl.classList.remove('hidden');
   detailTitleEl.textContent = `Knoppen — ${visitor.name}`;
   detailMetaEl.textContent = `${modeLabel(visitor.mode)} · ${visitor.buttons.length} knop(pen) in database`;
+  renderSiteRoutes();
+  renderVercelProjects(visitor);
 
   if (!visitor.buttons.length) {
-    buttonsListEl.innerHTML = '<p class="no-results">Nog geen knoppen. Voeg er een toe.</p>';
+    buttonsListEl.innerHTML = '<p class="no-results">Nog geen knoppen. Voeg er een toe met + Knop.</p>';
     return;
   }
 
@@ -120,9 +189,64 @@ function getSelectedVisitor() {
   return visitors.find((v) => v.id === selectedVisitorId) || null;
 }
 
+async function loadSiteRoutes() {
+  const data = await api('/api/admin/site-routes');
+  siteRoutes = data.routes || [];
+}
+
+async function loadVercelProjects() {
+  try {
+    const status = await api('/api/admin/vercel/status');
+    vercelConfigured = Boolean(status.configured);
+    if (!vercelConfigured) {
+      vercelProjects = [];
+      renderVercelProjects(getSelectedVisitor());
+      return;
+    }
+    const data = await api('/api/admin/vercel/projects');
+    vercelConfigured = true;
+    vercelProjects = data.projects || [];
+    renderVercelProjects(getSelectedVisitor());
+  } catch (err) {
+    vercelConfigured = false;
+    vercelProjects = [];
+    if (vercelStatusEl) vercelStatusEl.textContent = err.message || 'Vercel laden mislukt';
+    vercelProjectsEl && (vercelProjectsEl.innerHTML = '');
+    vercelActionsEl?.classList.add('hidden');
+  }
+}
+
+function getSelectedVercelButtons(all = false) {
+  if (all) {
+    return vercelProjects.map((p) => ({ label: p.name, url: p.url }));
+  }
+  return [...(vercelProjectsEl?.querySelectorAll('input[data-vercel-url]:checked') || [])].map((input) => ({
+    label: input.dataset.vercelLabel,
+    url: input.dataset.vercelUrl,
+  }));
+}
+
+async function importVercelButtons(all = false) {
+  if (!selectedVisitorId) {
+    alert('Selecteer eerst een bezoeker.');
+    return;
+  }
+  const buttons = getSelectedVercelButtons(all);
+  if (!buttons.length) {
+    alert(all ? 'Geen Vercel-projecten om toe te voegen.' : 'Selecteer eerst één of meer projecten.');
+    return;
+  }
+  const result = await api(`/api/admin/visitors/${encodeURIComponent(selectedVisitorId)}/buttons/from-vercel`, {
+    method: 'POST',
+    body: JSON.stringify({ buttons }),
+  });
+  await loadVisitors();
+  alert(`${result.added} knop(pen) toegevoegd${result.skipped ? `, ${result.skipped} overgeslagen` : ''}.`);
+}
+
 async function loadVisitors() {
   const data = await api('/api/admin/visitors');
-  visitors = data.visitors;
+  visitors = data.visitors || [];
   renderVisitors();
   renderButtons(getSelectedVisitor());
 }
@@ -253,6 +377,14 @@ buttonForm.addEventListener('submit', async (e) => {
   }
 });
 
+vercelRefreshBtn?.addEventListener('click', () => loadVercelProjects());
+vercelAddSelectedBtn?.addEventListener('click', () => {
+  importVercelButtons(false).catch((err) => alert(err.message));
+});
+vercelAddAllBtn?.addEventListener('click', () => {
+  importVercelButtons(true).catch((err) => alert(err.message));
+});
+
 addVisitorBtn.addEventListener('click', () => openVisitorDialog());
 addButtonBtn.addEventListener('click', () => {
   if (!selectedVisitorId) {
@@ -286,12 +418,14 @@ async function init() {
     }
 
     contentEl.classList.remove('hidden');
+    await loadSiteRoutes();
     await loadVisitors();
     if (visitors.length) {
-      selectedVisitorId = visitors[0].id;
+      selectedVisitorId = visitors.find((v) => v.id === me.id)?.id || visitors[0].id;
       renderVisitors();
       renderButtons(getSelectedVisitor());
     }
+    await loadVercelProjects();
   } catch {
     window.location.href = '/';
   }

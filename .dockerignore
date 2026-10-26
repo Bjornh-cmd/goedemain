@@ -1,0 +1,10 @@
+node_modules
+.git
+.cursor
+.env
+*.md
+agent-transcripts
+.vscode
+.DS_Store
+vid/**/*.mp4
+Bjorn-Jacht.mp4

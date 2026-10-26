@@ -6,8 +6,8 @@
   <title>Button Portal — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=acme4">
 </head>
 <body>
   <div class="page">
@@ -22,7 +22,7 @@
           </div>
           <div class="brand-text">
             <h1>Admin</h1>
-            <p>Beheer bezoekers en knoppen in de database</p>
+            <p>Beheer accounts en knoppen (lokaal: data/config.json)</p>
           </div>
         </div>
         <div class="topbar-actions">
@@ -54,6 +54,23 @@
             <button type="button" id="add-button-btn" class="btn-secondary">+ Knop</button>
           </div>
           <p id="detail-meta" class="subtitle"></p>
+          <div class="site-routes-block">
+            <h3 class="site-routes-title">Website-pagina's</h3>
+            <p class="site-routes-hint">Klik om de pagina in een nieuw tabblad te openen.</p>
+            <div id="site-routes" class="site-routes"></div>
+          </div>
+          <div class="site-routes-block vercel-block">
+            <div class="section-header">
+              <h3 class="site-routes-title">Vercel-projecten</h3>
+              <button type="button" id="vercel-refresh-btn" class="btn-secondary admin-btn-sm">Vernieuwen</button>
+            </div>
+            <p id="vercel-status" class="site-routes-hint">Vercel-status laden...</p>
+            <div id="vercel-projects" class="site-routes"></div>
+            <div class="vercel-actions hidden" id="vercel-actions">
+              <button type="button" id="vercel-add-selected" class="btn-secondary admin-btn-sm">Geselecteerde toevoegen</button>
+              <button type="button" id="vercel-add-all" class="btn-secondary admin-btn-sm">Alles toevoegen</button>
+            </div>
+          </div>
           <div id="buttons-list" class="admin-list"></div>
         </section>
       </div>
@@ -95,9 +112,9 @@
       <div class="input-wrap">
         <input type="text" id="button-label" class="vlog-code-input" required>
       </div>
-      <label for="button-url">URL</label>
+      <label for="button-url">URL of pad</label>
       <div class="input-wrap">
-        <input type="url" id="button-url" class="vlog-code-input" placeholder="https://..." required>
+        <input type="text" id="button-url" class="vlog-code-input" placeholder="https://... of /video" required>
       </div>
       <p id="button-form-error" class="error hidden"><span id="button-form-error-text"></span></p>
       <div class="admin-dialog-actions">

@@ -3,6 +3,7 @@
     {
       "id": "bjorn",
       "name": "Bjorn",
+      "admin": true,
       "passwordHash": "$2a$10$uaenvvtXgWnnOWXAq6J9OO3dWMzMtRekHntN1juxMMXCB0gngcAnS",
       "mode": "custom",
       "exclude": [],
@@ -21,11 +22,11 @@
         },
         {
           "label": "game",
-          "url": "https://game.snubstad.nl"
+          "url": "https://game.bjorn-sites.nl"
         },
         {
           "label": "Cinema",
-          "url": "https://cinema.snubstad.nl"
+          "url": "https://cinema.bjorn-sites.nl"
         },
         {
           "label": "Blooket-Anticheat",
@@ -33,19 +34,55 @@
         },
         {
           "label": "WeerBericht",
-          "url": "https://weer.snubstad.nl"
+          "url": "https://weer.bjorn-sites.nl"
         },
         {
           "label": "Finance Manager",
           "url": "https://bjorn-finance.onrender.com"
         },
         {
-          "label": "video",
-          "url": "https://www.snubstad.nl/video"
+          "label": "online-python",
+          "url": "https://python.bjorn-sites.nl/"
+        },
+        {
+          "label": "Video",
+          "url": "/video"
+        },
+        {
+          "label": "captcha",
+          "url": "https://captcha.bjorn-sites.nl"
+        },
+        {
+          "label": "error",
+          "url": "https://error-beryl-delta.vercel.app"
+        },
+        {
+          "label": "laptop-isw",
+          "url": "https://laptop-isw.vercel.app"
+        },
+        {
+          "label": "main-emwt",
+          "url": "https://main.bjorn-sites.nl"
+        },
+        {
+          "label": "nz-alert",
+          "url": "https://nz-alert.vercel.app"
+        },
+        {
+          "label": "nz-backend",
+          "url": "https://nz-backend-six.vercel.app"
         },
         {
           "label": "online-python",
-          "url": "https://python.snubstad.nl/"
+          "url": "https://python.bjorn-sites.nl"
+        },
+        {
+          "label": "pallet-kit",
+          "url": "https://pallet-kit.vercel.app"
+        },
+        {
+          "label": "simon-says",
+          "url": "https://simon.bjorn-sites.nl"
         }
       ]
     },
@@ -61,7 +98,7 @@
         },
         {
           "label": "video",
-          "url": "https://www.snubstad.nl/video"
+          "url": "https://main.bjorn-sites.nl/video"
         }
       ],
       "exclude": []

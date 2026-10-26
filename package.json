@@ -1,7 +1,7 @@
 {
   "name": "button-portal",
   "version": "1.0.0",
-  "description": "Password-protected button portal with terminal editor",
+  "description": "Password-protected button portal with local config database and admin panel",
   "main": "server.js",
   "engines": {
     "node": ">=18"
@@ -10,7 +10,8 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "editor": "node editor.js",
-    "db:seed": "node scripts/seed-db.js"
+    "db:seed": "node scripts/seed-db.js",
+    "migrate": "node -e \"require('./lib/migrate-local').migrateLocalConfig()\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

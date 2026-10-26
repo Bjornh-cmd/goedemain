@@ -8,8 +8,10 @@ const {
   signToken,
   verifyToken,
   getCookieOptions,
-  findVisitorByPassword,
+  findVisitorByUsername,
+  verifyVisitorPassword,
 } = require('./lib/auth');
+const { listSiteRoutes } = require('./lib/site-routes');
 const {
   listVlogs,
   getVlog,
@@ -28,20 +30,31 @@ const {
   patchVisitor,
   removeVisitor,
   addButton,
+  addButtonsBulk,
   patchButton,
   removeButton,
 } = require('./lib/admin');
-const { isLocalMode, isVercel } = require('./lib/local-mode');
+const { getVercelStatus, listVercelProjects } = require('./lib/vercel');
 const { parseTargetUrl, fetchProxied } = require('./lib/browse-proxy');
+const { configureExpressTrustProxy, isCoolify } = require('./lib/http-env');
 
 const app = express();
+configureExpressTrustProxy(app);
 const isDev = process.env.NODE_ENV !== 'production';
 const SERVER_BUILD = String(Date.now());
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public'), { index: false }));
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false,
+  etag: false,
+  setHeaders(res, filePath) {
+    if (/\.(css|js)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
+  },
+}));
 
 if (isDev) {
   app.get('/api/dev-version', (_req, res) => {
@@ -53,9 +66,10 @@ app.get('/api/health', (_req, res) => {
   const health = {
     ok: Boolean(process.env.SESSION_SECRET),
     mode: 'local',
-    vercel: isVercel(),
     hasSessionSecret: Boolean(process.env.SESSION_SECRET),
     source: 'data/config.json',
+    admin: process.env.ADMIN_VISITOR_ID || 'bjorn',
+    coolify: isCoolify(),
   };
 
   res.status(health.ok ? 200 : 503).json(health);
@@ -102,12 +116,6 @@ async function requireAuth(req, res, next) {
 }
 
 async function requireAdminAuth(req, res, next) {
-  if (isLocalMode()) {
-    return res.status(503).json({
-      error: 'Admin niet beschikbaar in lokale modus. Gebruik npm run editor.',
-    });
-  }
-
   const visitor = await getVisitorFromRequest(req);
   if (!visitor) {
     return res.status(401).json({ error: 'Niet ingelogd' });
@@ -155,14 +163,14 @@ app.get('/finoviapps/:app', (req, res) => {
   });
 });
 
-app.get('/bjornjacht', (_req, res) => {
+app.get(['/bjornjacht', '/bjorn-jacht', '/Bjornjacht'], (_req, res) => {
   res.sendFile(bjornjachtPage);
 });
 
-app.get('/bjornjacht/video', (req, res) => {
+app.get(['/bjornjacht/video', '/bjorn-jacht/video'], (req, res) => {
   const vlog = getVlog('bjornjacht');
   if (!vlog) {
-    return res.status(404).send('Video niet gevonden');
+    return res.status(404).send('Video niet gevonden. Zet Bjorn-Jacht.mp4 in de projectroot of vid/bjornjacht/.');
   }
   try {
     streamVideo(vlog, req, res);
@@ -181,13 +189,12 @@ app.get('/vlog', (_req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-  if (isLocalMode()) {
-    return res.redirect('/dashboard');
-  }
-
   const visitor = await getVisitorFromRequest(req);
   if (!visitor) {
     return res.redirect('/');
+  }
+  if (!isAdminVisitor(visitor)) {
+    return res.redirect('/dashboard');
   }
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
@@ -229,7 +236,7 @@ app.post('/api/vlogs/:id/unlock', (req, res) => {
   }
 
   const token = signVlogToken(vlog.id);
-  res.cookie(getVlogCookieName(vlog.id), token, getVlogCookieOptions());
+  res.cookie(getVlogCookieName(vlog.id), token, getVlogCookieOptions(req));
   res.json({ ok: true });
 });
 
@@ -261,8 +268,11 @@ app.get('/api/vlogs/:id/video', (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-  const { password } = req.body;
+  const { username, password } = req.body;
 
+  if (!username || typeof username !== 'string') {
+    return res.status(400).json({ error: 'Gebruikersnaam is verplicht' });
+  }
   if (!password || typeof password !== 'string') {
     return res.status(400).json({ error: 'Wachtwoord is verplicht' });
   }
@@ -275,14 +285,19 @@ app.post('/api/login', async (req, res) => {
     }
 
     const loginVisitors = config.visitors.filter((v) => v.id !== 'gast');
-    const visitor = await findVisitorByPassword(loginVisitors, password);
+    const visitor = findVisitorByUsername(loginVisitors, username);
     if (!visitor) {
-      return res.status(401).json({ error: 'Onjuist wachtwoord' });
+      return res.status(401).json({ error: 'Onjuiste gebruikersnaam of wachtwoord' });
+    }
+
+    const ok = await verifyVisitorPassword(visitor, password);
+    if (!ok) {
+      return res.status(401).json({ error: 'Onjuiste gebruikersnaam of wachtwoord' });
     }
 
     const token = signToken(visitor.id);
-    res.cookie('session', token, getCookieOptions());
-    res.json({ name: visitor.name });
+    res.cookie('session', token, getCookieOptions(req));
+    res.json({ name: visitor.name, id: visitor.id, isAdmin: isAdminVisitor(visitor) });
   } catch (err) {
     console.error('Login error:', err);
     const msg = err.message?.includes('SESSION_SECRET') ? err.message : 'Inloggen mislukt';
@@ -290,20 +305,23 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-app.post('/api/logout', (_req, res) => {
-  res.clearCookie('session', { path: '/' });
+app.post('/api/logout', (req, res) => {
+  res.clearCookie('session', { path: '/', secure: getCookieOptions(req).secure });
   res.json({ ok: true });
 });
 
 app.get('/api/me', requireAuth, async (req, res) => {
   try {
     const config = await loadConfig();
+    const visitor = config.visitors.find((v) => v.id === req.visitor.id) || req.visitor;
+    const admin = isAdminVisitor(visitor);
     res.json({
-      id: req.visitor.id,
-      name: req.visitor.name,
-      mode: req.visitor.mode || 'custom',
-      buttonCount: resolveButtons(req.visitor, config).length,
-      isAdmin: !isLocalMode() && isAdminVisitor(req.visitor),
+      id: visitor.id,
+      name: visitor.name,
+      mode: visitor.mode || 'custom',
+      buttonCount: resolveButtons(visitor, config).length,
+      isAdmin: admin,
+      admin,
     });
   } catch (err) {
     console.error('Me error:', err);
@@ -335,7 +353,7 @@ app.get('/api/guest/info', async (_req, res) => {
   }
 });
 
-app.post('/api/login/guest', async (_req, res) => {
+app.post('/api/login/guest', async (req, res) => {
   try {
     const config = await loadConfig();
     const guest = getGuestVisitor(config);
@@ -345,7 +363,7 @@ app.post('/api/login/guest', async (_req, res) => {
     }
 
     const token = signToken(guest.id);
-    res.cookie('session', token, getCookieOptions());
+    res.cookie('session', token, getCookieOptions(req));
     res.json({ name: guest.name });
   } catch (err) {
     console.error('Guest login error:', err);
@@ -360,6 +378,43 @@ app.get('/api/admin/visitors', requireAdminAuth, async (_req, res) => {
   } catch (err) {
     console.error('Admin list error:', err);
     res.status(500).json({ error: err.message || 'Bezoekers laden mislukt' });
+  }
+});
+
+app.get('/api/admin/site-routes', requireAdminAuth, (_req, res) => {
+  res.json({ routes: listSiteRoutes() });
+});
+
+app.get('/api/admin/vercel/status', requireAdminAuth, (_req, res) => {
+  res.json(getVercelStatus());
+});
+
+app.get('/api/admin/vercel/projects', requireAdminAuth, async (_req, res) => {
+  try {
+    const status = getVercelStatus();
+    if (!status.configured) {
+      return res.status(503).json({
+        error: 'Vercel is niet geconfigureerd. Zet VERCEL_TOKEN in .env',
+        ...status,
+      });
+    }
+    const projects = await listVercelProjects();
+    res.json({ projects, ...status });
+  } catch (err) {
+    console.error('Vercel projects error:', err);
+    res.status(err.status || 500).json({ error: err.message || 'Vercel-projecten laden mislukt' });
+  }
+});
+
+app.post('/api/admin/visitors/:id/buttons/from-vercel', requireAdminAuth, async (req, res) => {
+  try {
+    const buttons = Array.isArray(req.body?.buttons) ? req.body.buttons : [];
+    const result = await addButtonsBulk(req.params.id, buttons);
+    if (!result) return res.status(404).json({ error: 'Bezoeker niet gevonden' });
+    res.status(201).json(result);
+  } catch (err) {
+    console.error('Vercel import error:', err);
+    res.status(422).json({ error: err.message || 'Knoppen importeren mislukt' });
   }
 });
 
